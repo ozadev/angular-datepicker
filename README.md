@@ -1,5 +1,6 @@
 Angular Datepicker
 ==================
+Light AngularJS directive that generates a datepicker calendar on your input element.
 
 ## Load
 
@@ -52,7 +53,7 @@ Call the directive wherever you want in your html page
 </datepicker>
 ```
 
-### Use gulp tasks rebuild from sources
+### Use gulp tasks to rebuild from sources
 
 - gulp (default) - _general js + scss build and watcher enabled_
 - gulp build-all - _general js + scss build_
