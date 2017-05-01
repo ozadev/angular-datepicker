@@ -1,8 +1,3 @@
-/*
- Runs callback at click outside element
- created by Oza / 12-01-2016
- */
-
 
 (function () {
     'use strict';

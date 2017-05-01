@@ -18,7 +18,6 @@ var appSassSources = [
 ];
 
 var appJsSources = [
-    './node_modules/angular/angular.min.js',
     './src/js/datepickerApp.module.js',
     './src/js/**/*js'
 ];
