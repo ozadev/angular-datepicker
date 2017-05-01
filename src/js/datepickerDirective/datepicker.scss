@@ -1,0 +1,219 @@
+@import "src/scss/variables";
+@import "src/scss/mixins";
+
+.datepicker-component-block {
+  position: relative;
+  display: inline-block;
+  text-align: left;
+
+  .datepicker-input-focus {
+    border: 3px solid #3aa7ff;
+  }
+
+  .datepicker-container {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    margin: 0 auto;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    line-height: $line-height-normal;
+
+    *, *:before, *:after {
+      box-sizing: border-box;
+    }
+
+    a, a:hover, a:visited, a:link, a:active {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+      padding:0;
+      margin:0;}
+
+    display: inline-block;
+    box-shadow: 0px 6px 20px 0px rgba(152, 125, 254, 0.14);
+    border: 1px solid #f0f0f0;
+
+    .datepicker-date-board {
+      padding: 16px 22px 4px 22px;
+
+      .month-switcher-panel {
+        position: relative;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+        .switcher-title {
+          color: #626165;
+          vertical-align: middle;
+        }
+        .button-left, .button-right {
+          position: absolute;
+          top: 0;
+          width: 40px;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          cursor: pointer;
+          transition: 0.2s;
+          &:hover {
+            background-color: #eaf5fd;
+          }
+        }
+        .button-left {
+          left: 0;
+        }
+        .button-right {
+          right: 0;
+        }
+        .arrow-left, .arrow-right {
+          display: inline-block;
+          position: relative;
+          vertical-align: middle;
+          width: 10px;
+          &::before, &::after {
+            position: absolute;
+            content: '';
+            top: 50%;
+            height: 1px;
+            width: 12px;
+            background-color: #74b0d9;
+          }
+        }
+        .arrow-left {
+          &::before, &::after {
+            left: 0;
+            transform-origin: center left;
+          }
+          &::before {
+            transform: rotate(-45deg);
+          }
+          &::after {
+            transform: rotate(45deg);
+          }
+        }
+        .arrow-right {
+          &::before, &::after {
+            right: 0;
+            transform-origin: center right;
+          }
+          &::before {
+            transform: rotate(-45deg);
+          }
+          &::after {
+            transform: rotate(45deg);
+          }
+        }
+
+      }
+
+      .date-board-title-panel {
+        width: 280px;
+        @include clearfix();
+        .title-item {
+          display: inline-block;
+          float: left;
+          width: 40px;
+          height: 34px;
+          line-height: 34px;
+          text-align: center;
+          vertical-align: middle;
+          font-size: 13px;
+          color: #b5b5b5
+        }
+      }
+
+      .date-board-container {
+        width: 280px;
+        @include clearfix();
+
+        .date-board-item {
+          display: inline-block;
+          float: left;
+          width: 40px;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          vertical-align: middle;
+          transition: 0.15s;
+          color: #727272;
+          border-right: 1px solid #ededed;
+          border-bottom: 1px solid #ededed;
+          &:nth-child(-n + 7) {
+            border-top: 1px solid #ededed;
+          }
+          &:nth-child(7n - 6) {
+            border-left: 1px solid #ededed;
+          }
+          &.selectable {
+            cursor: pointer;
+            &:hover {
+              color: #fff;
+              background-color: #3aa7ff;
+            }
+            &.selected {
+              color: #fff;
+              background-color: #76ce5a;
+            }
+          }
+        }
+      }
+
+      .control-panel {
+        position: relative;
+        height: 70px;
+        @include line-height-local(70px);
+
+        .control-cancel {
+          line-height: 14px;
+          display: inline-block;
+          padding: 3px 0;
+          color: #b3b3b3;
+          vertical-align: middle;
+          border-bottom: 1px solid #ebebeb;
+          cursor: pointer;
+          transition: $hover-transition-time;
+          &:hover {
+            border-bottom: 1px solid #74b0d9;
+          }
+        }
+        .control-accept {
+          display: inline-block;
+          position: absolute;
+          top: 50%;
+          right: 0;
+          transform: translate(0, -50%);
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          background-color: #77ce52;
+          cursor: pointer;
+          transition: $hover-transition-time;
+          &:hover {
+            background-color: #69bf51;
+          }
+          &::before {
+            position: absolute;
+            display: inline-block;
+            top: calc(50% - 6px);
+            left: calc(50% - 10px);
+            content: '';
+            width: 20px;
+            height: 8px;
+            border-left: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            transform: rotate(-55deg);
+          }
+        }
+
+      }
+
+    }
+
+  }
+
+}

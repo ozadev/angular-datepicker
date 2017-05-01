@@ -1,0 +1,51 @@
+@import "src/scss/variables";
+@import "src/scss/mixins";
+
+
+.time-selector-block {
+
+  .datepicker-heading-container {
+    padding: 22px;
+    border-bottom: 1px solid #f0f0f0;
+    background-color: #fcfcfc;
+    color: #626165;
+    @include clearfix();
+    .time-field {
+      display: inline-block;
+      float: right;
+      width: 70px;
+      height: 45px;
+      @include line-height-local(45px);
+      border: 1px solid #d9d9d9;
+      background-color: #fff;
+      text-align: center;
+      select {
+        color: #626165;
+        border: 1px solid transparent;
+        outline: none;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance:none;
+        &::-ms-expand {
+          display: none;
+        }
+        transition: $hover-transition-time;
+        cursor: pointer;
+        &:hover {
+          border: 1px solid #eaf5fd;
+        }
+      }
+    }
+    .date-field {
+      display: inline-block;
+      float: left;
+      width: 194px;
+      height: 45px;
+      @include line-height-local(45px);
+      border: 1px solid #d9d9d9;
+      background-color: #fff;
+      text-align: center;
+    }
+  }
+
+}

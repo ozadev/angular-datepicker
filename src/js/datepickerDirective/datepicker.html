@@ -1,0 +1,38 @@
+<div class="datepicker-component-block"
+     click-outside-closest="vm.datepickerOpened = false"
+     closest-selector=".datepicker-component-block">
+    <ng-transclude ng-click="vm.datepickerOpened = true"></ng-transclude>
+    <div class="datepicker-container"
+         ng-show="vm.datepickerOpened">
+        <time-selector date-model="vm.selectedDate" lang-config="vm.langConfig"></time-selector>
+        <div class="datepicker-date-board">
+            <div class="month-switcher-panel">
+                <span class="switcher-title">{{vm.currentDateTitle()}}</span>
+                <div class="button-left"
+                      ng-click="vm.switchPrevMonth()">
+                    <span class="arrow-left"></span>
+                </div>
+                <div class="button-right"
+                      ng-click="vm.switchNextMonth()">
+                    <span class="arrow-right"></span>
+                </div>
+            </div>
+            <div class="date-board-title-panel">
+                <div class="title-item"
+                     ng-repeat="title in vm.langConfig.days">{{title}}</div>
+            </div>
+            <div class="date-board-container">
+                <div class="date-board-item"
+                     ng-class="{'selected': $index === vm.selectedDateIndex, 'selectable': date !== ''}"
+                     ng-click="vm.selectDate($index)"
+                     data-ng-repeat="date in vm.dateBoard track by $index">
+                    {{date}}
+                </div>
+            </div>
+            <div class="control-panel">
+                <span class="control-cancel" ng-click="vm.datepickerOpened = false">{{vm.langConfig.cancelString}}</span>
+                <div class="control-accept" ng-click="vm.acceptResultTime(); vm.datepickerOpened = false"></div>
+            </div>
+        </div>
+    </div>
+</div>

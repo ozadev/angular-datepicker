@@ -1,0 +1,16 @@
+<div class="time-selector-block">
+    <div class="datepicker-heading-container">
+        <div class="date-field">{{vm.formatDateString()}}</div>
+        <div class="time-field">
+            <select ng-model="vm.hoursSelected" ng-change="vm.dateModel.setHours(+vm.hoursSelected)">
+                <option ng-repeat="hour in vm.hoursValues track by $index"
+                        value="{{$index}}">{{vm.formatTimeValue($index)}}</option>
+            </select>
+            <span>:</span>
+            <select ng-model="vm.minutesSelected" ng-change="vm.dateModel.setMinutes(+vm.minutesSelected)">
+                <option ng-repeat="hour in vm.minutesValue track by $index"
+                        value="{{$index}}">{{vm.formatTimeValue($index)}}</option>
+            </select>
+        </div>
+    </div>
+</div>

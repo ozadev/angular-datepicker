@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Demo</title>
+    <link rel="stylesheet" href="./dist/angular-datepicker.css"/>
+    <style>
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+
+        section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-bottom: 700px;
+        }
+
+        h1 {
+            color: #69bf51;
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .text {
+            display: inline-block;
+            margin-right: 30px;
+        }
+
+        input {
+            width: 250px;
+            height: 45px;
+            padding: 0 15px;
+        }
+    </style>
+
+</head>
+<body ng-controller="mainCtrl as vm">
+    <section>
+        <h1>Angular datepicker directive Demo:</h1>
+        <p>
+            <span class="text">Ввод даты и времени:</span>
+            <datepicker config="vm.langConfig">
+                <input type="text" ng-model="vm.dateInputModel1" ng-readonly="true">
+            </datepicker>
+        </p>
+    </section>
+
+    <script src="./node_modules/angular/angular.min.js"></script>
+    <script src="./dist/angular-datepicker.js"></script>
+
+    <script>
+
+        angular
+                .module('demo', ['angular-datepicker'])
+                .controller('mainCtrl', mainCtrl);
+
+
+        mainCtrl.$inject = [];
+
+        function mainCtrl() {
+            var vm = this;
+
+            vm.dateInputModel1 = '';
+
+            vm.langConfig = {
+                months: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+                monthsPartFormat: ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря'],
+                days: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+                cancelString: 'Отмена'
+            };
+
+        }
+
+
+    </script>
+</body>
+</html>

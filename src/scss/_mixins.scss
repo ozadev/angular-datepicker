@@ -1,0 +1,21 @@
+@import "variables";
+
+
+@mixin clearfix () {
+  &::before, &::after {
+    content: '';
+    display: table;
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+@mixin line-height-local ($line-height) {
+  line-height: $line-height;
+  & > * {
+    line-height: $line-height-normal;
+  }
+}
+
