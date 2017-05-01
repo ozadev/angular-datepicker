@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('angular-datepicker')
+        .module('ozas.datepicker')
         .component('timeSelector', {
             // templateUrl: './src/js/timeSelectorComponent/timeSelector.html',
             template: template(),

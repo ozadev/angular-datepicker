@@ -336,7 +336,7 @@ c){var e=a|0,f=c;void 0===f&&(f=Math.min(b(a),3));Math.pow(10,f);return 1==e&&0=
   'use strict';
 
   angular
-      .module('angular-datepicker', []);
+      .module('ozas.datepicker', []);
 
 
 })();
@@ -345,7 +345,7 @@ c){var e=a|0,f=c;void 0===f&&(f=Math.min(b(a),3));Math.pow(10,f);return 1==e&&0=
     'use strict';
 
     angular
-        .module('angular-datepicker')
+        .module('ozas.datepicker')
         .directive('datepicker', datepicker);
 
     datepicker.$inject = [];
@@ -580,7 +580,7 @@ c){var e=a|0,f=c;void 0===f&&(f=Math.min(b(a),3));Math.pow(10,f);return 1==e&&0=
     'use strict';
 
     angular
-        .module('angular-datepicker')
+        .module('ozas.datepicker')
         .component('timeSelector', {
             // templateUrl: './src/js/timeSelectorComponent/timeSelector.html',
             template: template(),
@@ -655,7 +655,7 @@ c){var e=a|0,f=c;void 0===f&&(f=Math.min(b(a),3));Math.pow(10,f);return 1==e&&0=
     'use strict';
 
     angular
-        .module('angular-datepicker')
+        .module('ozas.datepicker')
         .directive('clickOutsideClosest', clickOutsideClosest);
 
     clickOutsideClosest.$inject = ['$document'];
@@ -680,69 +680,5 @@ c){var e=a|0,f=c;void 0===f&&(f=Math.min(b(a),3));Math.pow(10,f);return 1==e&&0=
             }
         }
     }
-
-})();
-/*
-  Main app module config
-created by German / 11-12-2016
-*/
-
-// (function (window, angular) {
-//   'use strict';
-//
-//   angular.module('App')
-//     .config([
-//         '$interpolateProvider',
-//         function ($interpolateProvider) {
-//
-//             $interpolateProvider.startSymbol("[[");
-//             $interpolateProvider.endSymbol("]]");
-//
-//         }
-//     ]);
-//
-// })(window, window.angular);
-
-(function () {
-  'use strict';
-
-  // angular.module('angular-datepicker')
-  //   .run([
-  //       '$rootScope',
-  //       '$window',
-  //       '$document',
-  //       function ($rootScope, $window, $document) {
-  //
-  //           $rootScope.screenType = ($window.innerWidth < 768) ? 'mobile' :
-  //             ($window.innerWidth < 1200) ? 'tablet' : 'desktop';
-  //
-  //           angular.element($window).bind('resize', function() {
-  //               var screenTypeNew = ($window.innerWidth < 768) ? 'mobile' :
-  //                 ($window.innerWidth < 1200) ? 'tablet' : 'desktop';
-  //               if (screenTypeNew !== $rootScope.screenType) {
-  //                   $rootScope.screenType = screenTypeNew;
-  //                   $rootScope.$digest();
-  //                   // console.log($rootScope.screenType);
-  //               }
-  //           });
-  //
-  //           $rootScope.isScreenDesktop = function() {
-  //               return $rootScope.screenType === 'desktop';
-  //           };
-  //
-  //           $rootScope.isScreenMobile = function() {
-  //               return $rootScope.screenType === 'mobile';
-  //           };
-  //
-  //           $rootScope.isScreenTablet = function() {
-  //               return $rootScope.screenType === 'tablet';
-  //           };
-  //
-  //           $rootScope.$on('$stateChangeSuccess', function() {
-  //             $document[0].body.scrollTop = $document[0].documentElement.scrollTop = 0;
-  //           });
-  //
-  //       }
-  //   ]);
 
 })();

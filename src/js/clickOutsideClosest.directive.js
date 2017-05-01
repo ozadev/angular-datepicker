@@ -8,7 +8,7 @@
     'use strict';
 
     angular
-        .module('angular-datepicker')
+        .module('ozas.datepicker')
         .directive('clickOutsideClosest', clickOutsideClosest);
 
     clickOutsideClosest.$inject = ['$document'];
