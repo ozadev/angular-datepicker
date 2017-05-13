@@ -27,10 +27,20 @@
             margin-right: 30px;
         }
 
+        .comment {
+            display: inline-block;
+            color: #7e7b78;
+            margin-left: 20px;
+        }
+
         input {
             width: 250px;
             height: 45px;
             padding: 0 15px;
+        }
+
+        p {
+            margin: 50px 0;
         }
     </style>
 
@@ -39,11 +49,19 @@
     <section>
         <h1>Angular datepicker directive Demo:</h1>
         <p>
-            <span class="text">Ввод даты и времени:</span>
-            <datepicker config="vm.langConfig">
-                <input type="text" ng-model="vm.dateInputModel1" ng-readonly="true">
+            <span class="text">Enter date and time:</span>
+            <datepicker config="vm.langConfigEn">
+                <input type="text" ng-model="vm.dateInputModelEn" ng-readonly="true">
             </datepicker>
+            <span class="comment">(english language config)</span>
         </p>
+        <!--<p>-->
+            <!--<span class="text">Enter date and time:</span>-->
+            <!--<datepicker config="vm.langConfigRu">-->
+                <!--<input type="text" ng-model="vm.dateInputModelRu" ng-readonly="true">-->
+            <!--</datepicker>-->
+            <!--<span class="comment">(russian language config)</span>-->
+        <!--</p>-->
     </section>
 
     <!--<script src="./node_modules/angular/angular.min.js"></script>-->
@@ -62,9 +80,17 @@
         function mainCtrl() {
             var vm = this;
 
-            vm.dateInputModel1 = '';
+            vm.dateInputModelEn = '';
+            vm.dateInputModelRu = '';
 
-            vm.langConfig = {
+            vm.langConfigEn = {
+                months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+                monthsPartFormat: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+                days: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+                cancelString: 'Cancel'
+            };
+
+            vm.langConfigRu = {
                 months: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
                 monthsPartFormat: ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря'],
                 days: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],

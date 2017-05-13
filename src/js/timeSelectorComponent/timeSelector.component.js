@@ -5,8 +5,7 @@
     angular
         .module('ozas.datepicker')
         .component('timeSelector', {
-            // templateUrl: './src/js/timeSelectorComponent/timeSelector.html',
-            template: template(),
+            templateUrl: 'src/js/timeSelectorComponent/timeSelector.html',
             bindings: {
                 dateModel: '=',
                 langConfig: '<'
@@ -43,25 +42,6 @@
             return vm.dateModel.getDate() + ' / ' + vm.langConfig.monthsPartFormat[vm.dateModel.getMonth()] + ' / ' + vm.dateModel.getFullYear();
         }
 
-    }
-
-    function template() {
-        return [
-            '<div class="time-selector-block">',
-                '<div class="datepicker-heading-container">',
-                    '<div class="date-field">{{vm.formatDateString()}}</div>',
-                    '<div class="time-field">',
-                        '<select ng-model="vm.hoursSelected" ng-change="vm.dateModel.setHours(+vm.hoursSelected)">',
-                            '<option ng-repeat="hour in vm.hoursValues track by $index" value="{{$index}}">{{vm.formatTimeValue($index)}}</option>',
-                        '</select>',
-                        '<span>:</span>',
-                        '<select ng-model="vm.minutesSelected" ng-change="vm.dateModel.setMinutes(+vm.minutesSelected)">',
-                            '<option ng-repeat="hour in vm.minutesValue track by $index" value="{{$index}}">{{vm.formatTimeValue($index)}}</option>',
-                        '</select>',
-                    '</div>',
-                '</div>',
-            '</div>'
-        ].join('');
     }
 
 

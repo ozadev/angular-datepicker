@@ -1,10 +1,12 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
+var addsrc = require('gulp-add-src');
 var sass = require('gulp-sass');
 var tinypng = require('gulp-tinypng-compress');
 var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
 var ngmin = require('gulp-ngmin');
+var templateCache = require('gulp-angular-templatecache');
 
 //
 //
@@ -51,13 +53,17 @@ gulp.task('sass-min', function () {
 });
 
 gulp.task('build', function () {
-    return gulp.src(appJsSources)
+    return gulp.src('./src/**/*html')
+        .pipe(templateCache('template.js', {module: 'ozas.datepicker', root: 'src'}))
+        .pipe(addsrc(appJsSources))
         .pipe(concat('angular-datepicker.js'))
         .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('compress', function () {
-    return gulp.src(appJsSources)
+    return gulp.src('./src/**/*html')
+        .pipe(templateCache('template.js', {module: 'ozas.datepicker', root: 'src'}))
+        .pipe(addsrc(appJsSources))
         .pipe(concat('angular-datepicker.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./dist/'));

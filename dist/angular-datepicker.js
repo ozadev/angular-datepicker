@@ -19,8 +19,7 @@
 
     function datepicker() {
         return {
-            // templateUrl: './src/js/datepickerDirective/datepicker.html',
-            template: template(),
+            templateUrl: 'src/js/datepickerDirective/datepicker.html',
             transclude: true,
             scope: {
                 config: '='
@@ -205,43 +204,11 @@
 
     }
 
-    function template() {
-        return [
-            '<div class="datepicker-component-block" click-outside-closest="vm.datepickerOpened = false" closest-selector=".datepicker-component-block">',
-                '<ng-transclude ng-click="vm.datepickerOpened = true"></ng-transclude>',
-                '<div class="datepicker-container" ng-show="vm.datepickerOpened">',
-                    '<time-selector date-model="vm.selectedDate" lang-config="vm.langConfig"></time-selector>',
-                    '<div class="datepicker-date-board">',
-                        '<div class="month-switcher-panel">',
-                            '<span class="switcher-title">{{vm.currentDateTitle()}}</span>',
-                            '<div class="button-left" ng-click="vm.switchPrevMonth()">',
-                                '<span class="arrow-left"></span>',
-                            '</div>',
-                            '<div class="button-right" ng-click="vm.switchNextMonth()">',
-                                '<span class="arrow-right"></span>',
-                            '</div>',
-                        '</div>',
-                        '<div class="date-board-title-panel">',
-                            '<div class="title-item" ng-repeat="title in vm.langConfig.days">{{title}}</div>',
-                        '</div>',
-                        '<div class="date-board-container">',
-                            '<div class="date-board-item" ng-class="{\'selected\': $index === vm.selectedDateIndex, \'selectable\': date !== \'\'}" ng-click="vm.selectDate($index)" data-ng-repeat="date in vm.dateBoard track by $index">',
-                                '{{date}}',
-                            '</div>',
-                        '</div>',
-                        '<div class="control-panel">',
-                            '<span class="control-cancel" ng-click="vm.datepickerOpened = false">{{vm.langConfig.cancelString}}</span>',
-                            '<div class="control-accept" ng-click="vm.acceptResultTime(); vm.datepickerOpened = false"></div>',
-                        '</div>',
-                    '</div>',
-                '</div>',
-            '</div>'
-        ].join('');
-    }
-
 })();
 
 
+angular.module('ozas.datepicker').run(['$templateCache', function($templateCache) {$templateCache.put('src/js/datepickerDirective/datepicker.html','<div class="datepicker-component-block"\r\n     click-outside-closest="vm.datepickerOpened = false"\r\n     closest-selector=".datepicker-component-block">\r\n    <ng-transclude ng-click="vm.datepickerOpened = true"></ng-transclude>\r\n    <div class="datepicker-container"\r\n         ng-show="vm.datepickerOpened">\r\n        <time-selector date-model="vm.selectedDate" lang-config="vm.langConfig"></time-selector>\r\n        <div class="datepicker-date-board">\r\n            <div class="month-switcher-panel">\r\n                <span class="switcher-title">{{vm.currentDateTitle()}}</span>\r\n                <div class="button-left"\r\n                      ng-click="vm.switchPrevMonth()">\r\n                    <span class="arrow-left"></span>\r\n                </div>\r\n                <div class="button-right"\r\n                      ng-click="vm.switchNextMonth()">\r\n                    <span class="arrow-right"></span>\r\n                </div>\r\n            </div>\r\n            <div class="date-board-title-panel">\r\n                <div class="title-item"\r\n                     ng-repeat="title in vm.langConfig.days">{{title}}</div>\r\n            </div>\r\n            <div class="date-board-container">\r\n                <div class="date-board-item"\r\n                     ng-class="{\'selected\': $index === vm.selectedDateIndex, \'selectable\': date !== \'\'}"\r\n                     ng-click="vm.selectDate($index)"\r\n                     data-ng-repeat="date in vm.dateBoard track by $index">\r\n                    {{date}}\r\n                </div>\r\n            </div>\r\n            <div class="control-panel">\r\n                <span class="control-cancel" ng-click="vm.datepickerOpened = false">{{vm.langConfig.cancelString}}</span>\r\n                <div class="control-accept" ng-click="vm.acceptResultTime(); vm.datepickerOpened = false"></div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n');
+$templateCache.put('src/js/timeSelectorComponent/timeSelector.html','<div class="time-selector-block">\r\n    <div class="datepicker-heading-container">\r\n        <div class="date-field">{{vm.formatDateString()}}</div>\r\n        <div class="time-field">\r\n            <select ng-model="vm.hoursSelected" ng-change="vm.dateModel.setHours(+vm.hoursSelected)">\r\n                <option ng-repeat="hour in vm.hoursValues track by $index"\r\n                        value="{{$index}}">{{vm.formatTimeValue($index)}}</option>\r\n            </select>\r\n            <span>:</span>\r\n            <select ng-model="vm.minutesSelected" ng-change="vm.dateModel.setMinutes(+vm.minutesSelected)">\r\n                <option ng-repeat="hour in vm.minutesValue track by $index"\r\n                        value="{{$index}}">{{vm.formatTimeValue($index)}}</option>\r\n            </select>\r\n        </div>\r\n    </div>\r\n</div>\r\n');}]);
 
 (function () {
     'use strict';
@@ -249,8 +216,7 @@
     angular
         .module('ozas.datepicker')
         .component('timeSelector', {
-            // templateUrl: './src/js/timeSelectorComponent/timeSelector.html',
-            template: template(),
+            templateUrl: 'src/js/timeSelectorComponent/timeSelector.html',
             bindings: {
                 dateModel: '=',
                 langConfig: '<'
@@ -287,25 +253,6 @@
             return vm.dateModel.getDate() + ' / ' + vm.langConfig.monthsPartFormat[vm.dateModel.getMonth()] + ' / ' + vm.dateModel.getFullYear();
         }
 
-    }
-
-    function template() {
-        return [
-            '<div class="time-selector-block">',
-                '<div class="datepicker-heading-container">',
-                    '<div class="date-field">{{vm.formatDateString()}}</div>',
-                    '<div class="time-field">',
-                        '<select ng-model="vm.hoursSelected" ng-change="vm.dateModel.setHours(+vm.hoursSelected)">',
-                            '<option ng-repeat="hour in vm.hoursValues track by $index" value="{{$index}}">{{vm.formatTimeValue($index)}}</option>',
-                        '</select>',
-                        '<span>:</span>',
-                        '<select ng-model="vm.minutesSelected" ng-change="vm.dateModel.setMinutes(+vm.minutesSelected)">',
-                            '<option ng-repeat="hour in vm.minutesValue track by $index" value="{{$index}}">{{vm.formatTimeValue($index)}}</option>',
-                        '</select>',
-                    '</div>',
-                '</div>',
-            '</div>'
-        ].join('');
     }
 
 

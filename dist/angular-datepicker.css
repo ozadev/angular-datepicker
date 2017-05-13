@@ -15,6 +15,7 @@
     -ms-transform: translate(-50%, 0);
     -o-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
+    z-index: 100;
     margin: 0 auto;
     font-family: "Open Sans", sans-serif;
     font-size: 14px;
