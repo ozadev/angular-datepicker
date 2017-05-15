@@ -21,9 +21,10 @@
 
                     if (!e.target.closest(scope.closestSelector)) {
                         scope.$apply(function () {
-                            scope.$eval(scope.clickOutsideClosest);
+                            scope.clickOutsideClosest();
                         });
                     }
+
                 });
             }
         }

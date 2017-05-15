@@ -71,7 +71,7 @@ gulp.task('compress', function () {
 
 gulp.task('watch', function () {
     gulp.watch(appSassSources, ['sass']);
-    gulp.watch(appJsSources, ['build']);
+    gulp.watch([appJsSources, './src/**/*html'], ['build']);
 });
 
 gulp.task('build-all', ['sass', 'build']);

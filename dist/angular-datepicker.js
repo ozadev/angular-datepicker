@@ -13,6 +13,94 @@
 
     angular
         .module('ozas.datepicker')
+        .directive('clickOutsideClosest', clickOutsideClosest);
+
+    clickOutsideClosest.$inject = ['$document'];
+
+    function clickOutsideClosest($document) {
+        return {
+            restrict: 'A',
+            scope: {
+                clickOutsideClosest: '&',
+                closestSelector: '@'
+            },
+            link: function (scope, elem, attr) {
+
+                $document.on('click', function (e) {
+
+                    if (!e.target.closest(scope.closestSelector)) {
+                        scope.$apply(function () {
+                            scope.clickOutsideClosest();
+                        });
+                    }
+
+                });
+            }
+        }
+    }
+
+})();
+angular.module('ozas.datepicker').run(['$templateCache', function($templateCache) {$templateCache.put('src/js/datepickerDirective/datepicker.html','<div class="datepicker-component-block"\r\n     data-datepicker-index="{{vm.datepickerIndex}}">\r\n    <div ng-if="vm.datepickerIndex === 0"\r\n         click-outside-closest="vm.setCloseAll()"\r\n         closest-selector=".datepicker-component-block"></div>\r\n    <ng-transclude ng-click="vm.setOpen()"></ng-transclude>\r\n    <div class="datepicker-container"\r\n         ng-show="vm.datepickerOpened">\r\n        <time-selector date-model="vm.selectedDate" lang-config="vm.langConfig"></time-selector>\r\n        <div class="datepicker-date-board">\r\n            <div class="month-switcher-panel">\r\n                <span class="switcher-title">{{vm.currentDateTitle()}}</span>\r\n                <div class="button-left"\r\n                      ng-click="vm.switchPrevMonth()">\r\n                    <span class="arrow-left"></span>\r\n                </div>\r\n                <div class="button-right"\r\n                      ng-click="vm.switchNextMonth()">\r\n                    <span class="arrow-right"></span>\r\n                </div>\r\n            </div>\r\n            <div class="date-board-title-panel">\r\n                <div class="title-item"\r\n                     ng-repeat="title in vm.langConfig.days">{{title}}</div>\r\n            </div>\r\n            <div class="date-board-container">\r\n                <div class="date-board-item"\r\n                     ng-class="{\'selected\': $index === vm.selectedDateIndex, \'selectable\': date !== \'\'}"\r\n                     ng-click="vm.selectDate($index)"\r\n                     data-ng-repeat="date in vm.dateBoard track by $index">\r\n                    {{date}}\r\n                </div>\r\n            </div>\r\n            <div class="control-panel">\r\n                <span class="control-cancel" ng-click="vm.datepickerOpened = false">{{vm.langConfig.cancelString}}</span>\r\n                <div class="control-accept" ng-click="vm.acceptResultTime(); vm.datepickerOpened = false"></div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n');
+$templateCache.put('src/js/timeSelectorComponent/timeSelector.html','<div class="time-selector-block">\r\n    <div class="datepicker-heading-container">\r\n        <div class="date-field">{{vm.formatDateString()}}</div>\r\n        <div class="time-field">\r\n            <select ng-model="vm.hoursSelected" ng-change="vm.dateModel.setHours(+vm.hoursSelected)">\r\n                <option ng-repeat="hour in vm.hoursValues track by $index"\r\n                        value="{{$index}}">{{vm.formatTimeValue($index)}}</option>\r\n            </select>\r\n            <span>:</span>\r\n            <select ng-model="vm.minutesSelected" ng-change="vm.dateModel.setMinutes(+vm.minutesSelected)">\r\n                <option ng-repeat="hour in vm.minutesValue track by $index"\r\n                        value="{{$index}}">{{vm.formatTimeValue($index)}}</option>\r\n            </select>\r\n        </div>\r\n    </div>\r\n</div>\r\n');}]);
+/*
+ Language system service
+ created by Oza / 28-12-2016
+ */
+
+(function () {
+    'use strict';
+
+    angular
+        .module('ozas.datepicker')
+        .factory('datepickerItemRegister', datepickerItemRegisterService);
+
+    datepickerItemRegisterService.$inject = [];
+
+    function datepickerItemRegisterService () {
+        // var self = this;
+
+        var datepickerInstantsArr = [];
+
+        var service = {
+            register: register,
+            setOpen: setOpen,
+            setCloseAll: setCloseAll
+        };
+
+        return service;
+
+        //
+        //
+        //
+
+        function register(setItemOpenValue) {
+            datepickerInstantsArr.push({
+                setItemOpenValue: setItemOpenValue
+            });
+
+            return datepickerInstantsArr.length - 1;
+        }
+
+        function setOpen(index) {
+            setCloseAll();
+            datepickerInstantsArr[index].setItemOpenValue(true);
+        }
+
+        function setCloseAll() {
+            datepickerInstantsArr.forEach(function(item) {
+                item.setItemOpenValue(false);
+            });
+        }
+
+    }
+
+})();
+
+(function () {
+    'use strict';
+
+    angular
+        .module('ozas.datepicker')
         .directive('datepicker', datepicker);
 
     datepicker.$inject = [];
@@ -61,9 +149,9 @@
         }
     }
 
-    datepickerController.$inject = ['$scope'];
+    datepickerController.$inject = ['$scope', 'datepickerItemRegister'];
 
-    function datepickerController($scope) {
+    function datepickerController($scope, datepickerItemRegister) {
         var vm = this;
 
         var viewDate = new Date();
@@ -72,6 +160,13 @@
         vm.dateBoard = createDateBoardArray(viewDate);
         vm.selectedDateIndex = getSelectedIndex();
         vm.selectedDate = new Date();
+
+        vm.datepickerIndex = datepickerItemRegister.register(
+            function(value) {
+                vm.datepickerOpened = value;
+            }
+        );
+
 
         // Default language constants
         vm.langConfig = {
@@ -86,6 +181,10 @@
         vm.selectDate = selectDate;
         vm.currentDateTitle = currentDateTitle;
         vm.acceptResultTime = acceptResultTime;
+        vm.setCloseAll = datepickerItemRegister.setCloseAll;
+        vm.setOpen = function() {
+            datepickerItemRegister.setOpen(vm.datepickerIndex);
+        };
 
         vm.$onInit = function() {
             if (vm.config) {
@@ -207,8 +306,6 @@
 })();
 
 
-angular.module('ozas.datepicker').run(['$templateCache', function($templateCache) {$templateCache.put('src/js/datepickerDirective/datepicker.html','<div class="datepicker-component-block"\r\n     click-outside-closest="vm.datepickerOpened = false"\r\n     closest-selector=".datepicker-component-block">\r\n    <ng-transclude ng-click="vm.datepickerOpened = true"></ng-transclude>\r\n    <div class="datepicker-container"\r\n         ng-show="vm.datepickerOpened">\r\n        <time-selector date-model="vm.selectedDate" lang-config="vm.langConfig"></time-selector>\r\n        <div class="datepicker-date-board">\r\n            <div class="month-switcher-panel">\r\n                <span class="switcher-title">{{vm.currentDateTitle()}}</span>\r\n                <div class="button-left"\r\n                      ng-click="vm.switchPrevMonth()">\r\n                    <span class="arrow-left"></span>\r\n                </div>\r\n                <div class="button-right"\r\n                      ng-click="vm.switchNextMonth()">\r\n                    <span class="arrow-right"></span>\r\n                </div>\r\n            </div>\r\n            <div class="date-board-title-panel">\r\n                <div class="title-item"\r\n                     ng-repeat="title in vm.langConfig.days">{{title}}</div>\r\n            </div>\r\n            <div class="date-board-container">\r\n                <div class="date-board-item"\r\n                     ng-class="{\'selected\': $index === vm.selectedDateIndex, \'selectable\': date !== \'\'}"\r\n                     ng-click="vm.selectDate($index)"\r\n                     data-ng-repeat="date in vm.dateBoard track by $index">\r\n                    {{date}}\r\n                </div>\r\n            </div>\r\n            <div class="control-panel">\r\n                <span class="control-cancel" ng-click="vm.datepickerOpened = false">{{vm.langConfig.cancelString}}</span>\r\n                <div class="control-accept" ng-click="vm.acceptResultTime(); vm.datepickerOpened = false"></div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n');
-$templateCache.put('src/js/timeSelectorComponent/timeSelector.html','<div class="time-selector-block">\r\n    <div class="datepicker-heading-container">\r\n        <div class="date-field">{{vm.formatDateString()}}</div>\r\n        <div class="time-field">\r\n            <select ng-model="vm.hoursSelected" ng-change="vm.dateModel.setHours(+vm.hoursSelected)">\r\n                <option ng-repeat="hour in vm.hoursValues track by $index"\r\n                        value="{{$index}}">{{vm.formatTimeValue($index)}}</option>\r\n            </select>\r\n            <span>:</span>\r\n            <select ng-model="vm.minutesSelected" ng-change="vm.dateModel.setMinutes(+vm.minutesSelected)">\r\n                <option ng-repeat="hour in vm.minutesValue track by $index"\r\n                        value="{{$index}}">{{vm.formatTimeValue($index)}}</option>\r\n            </select>\r\n        </div>\r\n    </div>\r\n</div>\r\n');}]);
 
 (function () {
     'use strict';
@@ -258,36 +355,3 @@ $templateCache.put('src/js/timeSelectorComponent/timeSelector.html','<div class=
 
 })();
 
-
-
-(function () {
-    'use strict';
-
-    angular
-        .module('ozas.datepicker')
-        .directive('clickOutsideClosest', clickOutsideClosest);
-
-    clickOutsideClosest.$inject = ['$document'];
-
-    function clickOutsideClosest($document) {
-        return {
-            restrict: 'A',
-            scope: {
-                clickOutsideClosest: '&',
-                closestSelector: '@'
-            },
-            link: function (scope, elem, attr) {
-
-                $document.on('click', function (e) {
-
-                    if (!e.target.closest(scope.closestSelector)) {
-                        scope.$apply(function () {
-                            scope.$eval(scope.clickOutsideClosest);
-                        });
-                    }
-                });
-            }
-        }
-    }
-
-})();

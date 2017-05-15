@@ -1,7 +1,9 @@
 <div class="datepicker-component-block"
-     click-outside-closest="vm.datepickerOpened = false"
-     closest-selector=".datepicker-component-block">
-    <ng-transclude ng-click="vm.datepickerOpened = true"></ng-transclude>
+     data-datepicker-index="{{vm.datepickerIndex}}">
+    <div ng-if="vm.datepickerIndex === 0"
+         click-outside-closest="vm.setCloseAll()"
+         closest-selector=".datepicker-component-block"></div>
+    <ng-transclude ng-click="vm.setOpen()"></ng-transclude>
     <div class="datepicker-container"
          ng-show="vm.datepickerOpened">
         <time-selector date-model="vm.selectedDate" lang-config="vm.langConfig"></time-selector>

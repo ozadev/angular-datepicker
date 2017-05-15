@@ -52,9 +52,9 @@
         }
     }
 
-    datepickerController.$inject = ['$scope'];
+    datepickerController.$inject = ['$scope', 'datepickerItemRegister'];
 
-    function datepickerController($scope) {
+    function datepickerController($scope, datepickerItemRegister) {
         var vm = this;
 
         var viewDate = new Date();
@@ -63,6 +63,13 @@
         vm.dateBoard = createDateBoardArray(viewDate);
         vm.selectedDateIndex = getSelectedIndex();
         vm.selectedDate = new Date();
+
+        vm.datepickerIndex = datepickerItemRegister.register(
+            function(value) {
+                vm.datepickerOpened = value;
+            }
+        );
+
 
         // Default language constants
         vm.langConfig = {
@@ -77,6 +84,10 @@
         vm.selectDate = selectDate;
         vm.currentDateTitle = currentDateTitle;
         vm.acceptResultTime = acceptResultTime;
+        vm.setCloseAll = datepickerItemRegister.setCloseAll;
+        vm.setOpen = function() {
+            datepickerItemRegister.setOpen(vm.datepickerIndex);
+        };
 
         vm.$onInit = function() {
             if (vm.config) {
